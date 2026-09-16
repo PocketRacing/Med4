@@ -1,0 +1,4231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#08111f">
+<title>MED SHIFT — REMAKE 1.0</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#060b14;
+    --panel:#0d1624;
+    --panel2:#111d2d;
+    --panel3:#172438;
+    --line:#263850;
+    --text:#edf5ff;
+    --muted:#8192aa;
+    --blue:#49a6ff;
+    --cyan:#42e8e0;
+    --green:#43d17b;
+    --yellow:#ffd45c;
+    --orange:#ff9e4a;
+    --red:#ff5c67;
+    --purple:#ad7aff;
+    --shadow:0 18px 60px rgba(0,0,0,.35);
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 20% 0%,rgba(40,110,180,.16),transparent 35%),
+        radial-gradient(circle at 90% 20%,rgba(80,30,160,.12),transparent 30%),
+        var(--bg);
+    color:var(--text);
+    font-family:Inter,Arial,sans-serif;
+}
+
+button,
+select,
+input{
+    font:inherit;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+#app{
+    min-height:100vh;
+}
+
+/* LOGIN */
+
+.login{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+.login-card{
+    width:min(680px,100%);
+    background:linear-gradient(145deg,#101d2e,#09121e);
+    border:1px solid var(--line);
+    border-radius:28px;
+    box-shadow:var(--shadow);
+    padding:35px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.logo-icon{
+    width:70px;
+    height:70px;
+    border-radius:22px;
+    display:grid;
+    place-items:center;
+    font-size:36px;
+    background:linear-gradient(145deg,#1677c9,#36d4d1);
+    box-shadow:0 12px 35px rgba(30,170,230,.25);
+}
+
+.logo h1{
+    font-size:30px;
+    letter-spacing:2px;
+}
+
+.logo p{
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.login-text{
+    color:#b8c6d9;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+.name-input{
+    width:100%;
+    padding:17px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#08111d;
+    color:white;
+    outline:none;
+    margin-bottom:15px;
+}
+
+.primary{
+    width:100%;
+    padding:16px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#278ff0,#35c9c0);
+    color:white;
+    font-weight:800;
+}
+
+.primary:hover{
+    filter:brightness(1.1);
+}
+
+/* MAIN */
+
+.shell{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    min-height:100vh;
+}
+
+.sidebar{
+    position:sticky;
+    top:0;
+    height:100vh;
+    background:rgba(8,15,25,.94);
+    border-right:1px solid var(--line);
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+}
+
+.side-brand{
+    padding:10px;
+    margin-bottom:20px;
+}
+
+.side-brand strong{
+    font-size:19px;
+}
+
+.side-brand span{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+    margin-top:5px;
+}
+
+.nav{
+    display:grid;
+    gap:8px;
+}
+
+.nav button{
+    text-align:left;
+    padding:13px 14px;
+    border-radius:12px;
+    color:#aabbd0;
+    background:transparent;
+}
+
+.nav button:hover,
+.nav button.active{
+    color:white;
+    background:#15253a;
+}
+
+.profile-mini{
+    margin-top:auto;
+    background:#0d1827;
+    border:1px solid var(--line);
+    padding:14px;
+    border-radius:16px;
+}
+
+.profile-mini b{
+    display:block;
+}
+
+.profile-mini small{
+    color:var(--muted);
+}
+
+.main{
+    min-width:0;
+    padding:20px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.top-left h2{
+    font-size:25px;
+}
+
+.top-left p{
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.top-stats{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+.stat{
+    padding:10px 13px;
+    border:1px solid var(--line);
+    background:#0c1725;
+    border-radius:12px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:11px;
+    display:block;
+}
+
+.stat b{
+    font-size:15px;
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    gap:15px;
+}
+
+.grid-2{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.grid-3{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.card{
+    background:linear-gradient(145deg,rgba(16,29,46,.98),rgba(9,17,28,.98));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 10px 35px rgba(0,0,0,.15);
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.card-title h3{
+    font-size:17px;
+}
+
+.muted{
+    color:var(--muted);
+}
+
+.big-number{
+    font-size:30px;
+    font-weight:900;
+}
+
+.progress{
+    height:7px;
+    border-radius:99px;
+    overflow:hidden;
+    background:#07101b;
+    margin-top:10px;
+}
+
+.progress div{
+    height:100%;
+    background:linear-gradient(90deg,var(--blue),var(--cyan));
+}
+
+/* DASHBOARD */
+
+.hero{
+    padding:25px;
+    border-radius:22px;
+    background:
+        linear-gradient(135deg,rgba(25,87,145,.42),rgba(20,35,58,.8)),
+        radial-gradient(circle at 90% 20%,rgba(55,224,215,.18),transparent 35%);
+    border:1px solid #315271;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:30px;
+}
+
+.hero p{
+    color:#adc1d9;
+    margin-top:8px;
+    line-height:1.5;
+}
+
+.action{
+    padding:12px 15px;
+    border-radius:12px;
+    background:#16263b;
+    color:white;
+    border:1px solid #2a415e;
+}
+
+.action:hover{
+    background:#1d3550;
+}
+
+.action.green{
+    background:rgba(67,209,123,.13);
+    border-color:rgba(67,209,123,.35);
+}
+
+.action.red{
+    background:rgba(255,92,103,.13);
+    border-color:rgba(255,92,103,.35);
+}
+
+.action.blue{
+    background:rgba(73,166,255,.14);
+    border-color:rgba(73,166,255,.35);
+}
+
+.action.orange{
+    background:rgba(255,158,74,.14);
+    border-color:rgba(255,158,74,.35);
+}
+
+.action:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+}
+
+.tags{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.tag{
+    padding:5px 9px;
+    border-radius:99px;
+    font-size:11px;
+    background:#17263a;
+    color:#a9bdd5;
+    border:1px solid #263c57;
+}
+
+.tag.red{
+    color:#ff8e96;
+    border-color:#66323a;
+    background:#29171c;
+}
+
+.tag.green{
+    color:#7ee7a6;
+    border-color:#295d41;
+    background:#12271c;
+}
+
+.tag.yellow{
+    color:#ffe18a;
+    border-color:#665728;
+    background:#2b2512;
+}
+
+/* PATIENT QUEUE */
+
+.patient-list{
+    display:grid;
+    gap:10px;
+}
+
+.patient-row{
+    width:100%;
+    text-align:left;
+    display:grid;
+    grid-template-columns:48px 1fr auto;
+    align-items:center;
+    gap:12px;
+    padding:13px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#0b1523;
+    color:white;
+}
+
+.patient-row:hover{
+    border-color:#3a5879;
+    background:#111f31;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    background:#172a42;
+    font-size:22px;
+}
+
+.patient-row strong{
+    display:block;
+}
+
+.patient-row small{
+    color:var(--muted);
+}
+
+.priority{
+    min-width:65px;
+    text-align:center;
+    padding:6px 8px;
+    border-radius:9px;
+    font-size:11px;
+    font-weight:800;
+}
+
+.p1{
+    background:#4b151d;
+    color:#ff818b;
+}
+
+.p2{
+    background:#493414;
+    color:#ffd06a;
+}
+
+.p3{
+    background:#173d2a;
+    color:#7ee6a2;
+}
+
+/* PATIENT SCREEN */
+
+.patient-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);
+    gap:15px;
+}
+
+.patient-header{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.patient-face{
+    width:70px;
+    height:70px;
+    border-radius:20px;
+    display:grid;
+    place-items:center;
+    font-size:34px;
+    background:#162942;
+}
+
+.patient-name{
+    font-size:23px;
+    font-weight:900;
+}
+
+.patient-meta{
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.complaint{
+    margin-top:18px;
+    padding:15px;
+    border-radius:14px;
+    background:#0b1624;
+    border:1px solid #21344c;
+    line-height:1.5;
+}
+
+.vitals{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.vital{
+    padding:13px;
+    border-radius:13px;
+    background:#0a1421;
+    border:1px solid var(--line);
+}
+
+.vital small{
+    color:var(--muted);
+    display:block;
+}
+
+.vital b{
+    display:block;
+    margin-top:5px;
+    font-size:18px;
+}
+
+.vital.danger b{
+    color:var(--red);
+}
+
+.vital.warning b{
+    color:var(--yellow);
+}
+
+.section{
+    margin-top:18px;
+}
+
+.section h4{
+    color:#c4d2e2;
+    margin-bottom:10px;
+}
+
+/* ACTIONS */
+
+.action-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+
+.action-grid button{
+    min-height:55px;
+}
+
+.log{
+    height:270px;
+    overflow:auto;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.log-entry{
+    padding:10px;
+    border-radius:10px;
+    background:#0a1420;
+    color:#aebfd3;
+    font-size:12px;
+    line-height:1.45;
+    border-left:3px solid #29435e;
+}
+
+.log-entry.good{
+    border-left-color:var(--green);
+}
+
+.log-entry.bad{
+    border-left-color:var(--red);
+}
+
+.log-entry.info{
+    border-left-color:var(--blue);
+}
+
+/* QUESTIONS */
+
+.question-list{
+    display:grid;
+    gap:8px;
+}
+
+.question{
+    width:100%;
+    text-align:left;
+    padding:12px;
+    background:#0b1624;
+    border:1px solid var(--line);
+    border-radius:12px;
+    color:#c9d7e8;
+}
+
+.question:hover{
+    border-color:#426181;
+}
+
+.question.asked{
+    opacity:.5;
+}
+
+/* PROCEDURE */
+
+.stepper{
+    display:flex;
+    gap:5px;
+    overflow:auto;
+    margin-bottom:18px;
+}
+
+.step{
+    flex:1;
+    min-width:90px;
+    padding:10px;
+    text-align:center;
+    border-radius:10px;
+    background:#0a1420;
+    color:#70839b;
+    border:1px solid var(--line);
+    font-size:11px;
+}
+
+.step.done{
+    color:#8ce7ad;
+    border-color:#2d6646;
+}
+
+.step.current{
+    color:white;
+    border-color:#398bd2;
+    background:#10243a;
+}
+
+.procedure-zone{
+    min-height:240px;
+    display:grid;
+    place-items:center;
+    border:1px dashed #38536f;
+    border-radius:16px;
+    background:
+        radial-gradient(circle,rgba(62,148,224,.08),transparent 50%),
+        #08121e;
+    padding:25px;
+    text-align:center;
+}
+
+.procedure-controls{
+    margin-top:15px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.choice-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    width:100%;
+    max-width:650px;
+}
+
+.choice{
+    padding:14px;
+    border-radius:12px;
+    background:#101f31;
+    border:1px solid #29405b;
+    color:#d9e6f5;
+}
+
+.choice:hover{
+    border-color:#51a9ed;
+}
+
+.choice.selected{
+    border-color:var(--cyan);
+    background:#123438;
+}
+
+/* RESULTS */
+
+.result{
+    padding:13px;
+    border-radius:12px;
+    background:#0a1522;
+    border:1px solid var(--line);
+    margin-bottom:8px;
+}
+
+.result strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.result span{
+    color:#afc0d4;
+    font-size:13px;
+}
+
+.diagnosis-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+
+.diag{
+    text-align:left;
+    padding:14px;
+    border-radius:13px;
+    background:#0b1624;
+    border:1px solid var(--line);
+    color:#dbe8f5;
+}
+
+.diag:hover{
+    border-color:#4c9cda;
+}
+
+.diag.selected{
+    border-color:var(--cyan);
+    background:#103236;
+}
+
+/* SHIFT */
+
+.shift-box{
+    padding:25px;
+    text-align:center;
+}
+
+.shift-time{
+    font-size:50px;
+    font-weight:900;
+    letter-spacing:3px;
+}
+
+.clockbar{
+    height:10px;
+    background:#07101a;
+    border-radius:99px;
+    overflow:hidden;
+    margin:20px 0;
+}
+
+.clockbar div{
+    height:100%;
+    background:linear-gradient(90deg,var(--blue),var(--purple));
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:none;
+    place-items:center;
+    padding:20px;
+    background:rgba(0,0,0,.72);
+    backdrop-filter:blur(8px);
+}
+
+.modal.show{
+    display:grid;
+}
+
+.modal-card{
+    width:min(700px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:#0d1827;
+    border:1px solid #30445e;
+    border-radius:22px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.modal-title{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+
+.close{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    background:#18273a;
+    color:white;
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:200;
+    width:min(390px,calc(100% - 40px));
+    padding:15px;
+    border-radius:14px;
+    background:#111e2e;
+    border:1px solid #3a506d;
+    box-shadow:var(--shadow);
+    transform:translateY(120px);
+    opacity:0;
+    transition:.3s;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+    .shell{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:fixed;
+        z-index:50;
+        left:0;
+        right:0;
+        bottom:0;
+        top:auto;
+        height:auto;
+        padding:8px;
+        border-right:0;
+        border-top:1px solid var(--line);
+    }
+
+    .side-brand,
+    .profile-mini{
+        display:none;
+    }
+
+    .nav{
+        display:grid;
+        grid-template-columns:repeat(5,1fr);
+    }
+
+    .nav button{
+        text-align:center;
+        padding:10px 3px;
+        font-size:11px;
+    }
+
+    .main{
+        padding:13px 13px 90px;
+    }
+
+    .patient-layout,
+    .grid-2,
+    .grid-3{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+}
+
+@media(max-width:600px){
+    .login-card{
+        padding:23px;
+        border-radius:20px;
+    }
+
+    .logo h1{
+        font-size:24px;
+    }
+
+    .hero h1{
+        font-size:24px;
+    }
+
+    .vitals{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .diagnosis-grid,
+    .choice-grid{
+        grid-template-columns:1fr;
+    }
+
+    .patient-row{
+        grid-template-columns:42px 1fr;
+    }
+
+    .patient-row .priority{
+        grid-column:2;
+        justify-self:start;
+    }
+
+    .shift-time{
+        font-size:38px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<div id="modal" class="modal">
+    <div class="modal-card">
+        <div class="modal-title">
+            <h3 id="modalTitle">Информация</h3>
+            <button class="close" onclick="closeModal()">×</button>
+        </div>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<audio id="music" src="med.mp3" loop></audio>
+
+<script>
+"use strict";
+
+/* =========================================================
+   MED SHIFT REMAKE 1.0
+   Educational game mechanics.
+   ========================================================= */
+
+const SAVE_KEY = "MED_SHIFT_REMAKE_1_0";
+
+const $ = id => document.getElementById(id);
+
+const DB = {
+
+    departments:[
+        ["admissions","Приёмное отделение","🚪"],
+        ["therapy","Терапия","🩺"],
+        ["neurology","Неврология","🧠"],
+        ["surgery","Хирургия","🔪"],
+        ["burns","Ожоговое","🔥"],
+        ["icu","Реанимация","🚨"],
+        ["lab","Лаборатория","🧪"],
+        ["diagnostics","Диагностика","🩻"],
+        ["pediatrics","Педиатрия","🧸"],
+        ["infectious","Инфекционное","🦠"],
+        ["psychiatry","Психиатрия","🧩"]
+    ],
+
+    professions:{
+        feldsher:{
+            name:"Фельдшер",
+            icon:"🩺",
+            salary:300,
+            desc:"Первичный осмотр, сортировка, базовые процедуры и экстренная помощь."
+        },
+        nurse:{
+            name:"Медицинская сестра",
+            icon:"💉",
+            salary:280,
+            desc:"Уход, процедуры, забор материалов, наблюдение за пациентами."
+        },
+        doctor:{
+            name:"Врач",
+            icon:"👨‍⚕️",
+            salary:450,
+            desc:"Диагностика, тактика лечения и ведение пациентов."
+        },
+        surgeon:{
+            name:"Хирург",
+            icon:"🔪",
+            salary:550,
+            desc:"Хирургические случаи, раны, травмы и операционный блок."
+        }
+    }
+};
+
+/* =========================================================
+   CASE DATABASE
+   ========================================================= */
+
+const CASES = [
+
+{
+    id:"stroke",
+    name:"Сергей Волков",
+    age:64,
+    sex:"мужчина",
+    icon:"👨",
+    priority:1,
+    department:"neurology",
+    complaint:"Внезапно стало трудно говорить. Правая рука плохо слушается.",
+    hiddenDiagnosis:"Острое нарушение мозгового кровообращения",
+    alternatives:[
+        "Острое нарушение мозгового кровообращения",
+        "Гипогликемия",
+        "Мигрень",
+        "Паническая атака"
+    ],
+    vitals:{
+        bp:"178/102",
+        pulse:94,
+        spo2:96,
+        temp:36.7,
+        resp:19
+    },
+    history:[
+        ["Начало симптомов","Около 35 минут назад, во время завтрака."],
+        ["Сознание","Сознание сохранено."],
+        ["Лекарства","Принимает таблетки от давления, название не помнит."],
+        ["Аллергии","Не знает."],
+        ["Боль","Сильной боли нет."]
+    ],
+    exam:[
+        ["Речь","Речь нарушена, слова произносит с трудом."],
+        ["Лицо","При улыбке заметна асимметрия."],
+        ["Руки","Правая рука значительно слабее левой."],
+        ["Зрачки","Равные, реакция на свет сохранена."],
+        ["Сознание","Контакт доступен."]
+    ],
+    tests:{
+        glucose:"5.8 ммоль/л",
+        blood:"Hb 143 г/л; лейкоциты 7.4×10⁹/л; тромбоциты 224×10⁹/л",
+        ct:"Признаков внутричерепного кровоизлияния не выявлено."
+    }
+},
+
+{
+    id:"mi",
+    name:"Андрей Соколов",
+    age:57,
+    sex:"мужчина",
+    icon:"👨",
+    priority:1,
+    department:"icu",
+    complaint:"Сильная давящая боль за грудиной, холодный пот, слабость.",
+    hiddenDiagnosis:"Острый коронарный синдром",
+    alternatives:[
+        "Острый коронарный синдром",
+        "Паническая атака",
+        "Гастрит",
+        "Межрёберная невралгия"
+    ],
+    vitals:{
+        bp:"92/61",
+        pulse:112,
+        spo2:91,
+        temp:36.5,
+        resp:24
+    },
+    history:[
+        ["Начало","Боль появилась около 20 минут назад."],
+        ["Характер","Давящая, тяжёлая."],
+        ["Иррадиация","Отдаёт в левую руку."],
+        ["Факторы риска","Курит много лет."],
+        ["Аллергии","Неизвестно."]
+    ],
+    exam:[
+        ["Кожа","Бледная, холодная, влажная."],
+        ["Дыхание","Учащено."],
+        ["Сознание","В сознании, тревожен."],
+        ["Пульс","Частый."]
+    ],
+    tests:{
+        glucose:"6.1 ммоль/л",
+        blood:"Hb 151 г/л; лейкоциты 9.2×10⁹/л",
+        ecg:"Изменения ST-T, требующие срочной оценки."
+    }
+},
+
+{
+    id:"burn",
+    name:"Ирина Павлова",
+    age:31,
+    sex:"женщина",
+    icon:"👩",
+    priority:2,
+    department:"burns",
+    complaint:"Получила ожог горячей водой правой руки и передней поверхности предплечья.",
+    hiddenDiagnosis:"Термический ожог",
+    alternatives:[
+        "Термический ожог",
+        "Контактный дерматит",
+        "Аллергическая реакция",
+        "Химическое повреждение"
+    ],
+    vitals:{
+        bp:"121/78",
+        pulse:96,
+        spo2:99,
+        temp:36.8,
+        resp:18
+    },
+    history:[
+        ["Механизм","Кипяток пролился на руку."],
+        ["Время","Около 40 минут назад."],
+        ["Химические вещества","Не было."],
+        ["Сознание","Не теряла."],
+        ["Аллергии","Пенициллин — сыпь."]
+    ],
+    exam:[
+        ["Кожа","Покраснение и пузыри на части поверхности."],
+        ["Чувствительность","Сохранена."],
+        ["Кровотечение","Нет."],
+        ["Дистальная перфузия","Кисть тёплая, пульс сохранён."]
+    ],
+    tests:{
+        blood:"Без значимых отклонений."
+    }
+},
+
+{
+    id:"wound",
+    name:"Максим Климов",
+    age:26,
+    sex:"мужчина",
+    icon:"👨",
+    priority:2,
+    department:"surgery",
+    complaint:"Порезал предплечье металлическим предметом. Кровь продолжает идти.",
+    hiddenDiagnosis:"Резаная рана предплечья",
+    alternatives:[
+        "Резаная рана предплечья",
+        "Ушиб",
+        "Ожог",
+        "Аллергическая реакция"
+    ],
+    vitals:{
+        bp:"126/81",
+        pulse:102,
+        spo2:98,
+        temp:36.6,
+        resp:18
+    },
+    history:[
+        ["Механизм","Порезался металлическим краем."],
+        ["Время","Около часа назад."],
+        ["Прививка","Когда последний раз была вакцинация, не помнит."],
+        ["Аллергии","Отрицает."],
+        ["Лекарства","Не принимает."]
+    ],
+    exam:[
+        ["Рана","Линейная рана предплечья."],
+        ["Кровотечение","Умеренное."],
+        ["Чувствительность","Сохранена."],
+        ["Движения пальцев","Сохранены."],
+        ["Инородное тело","Не видно."]
+    ],
+    tests:{
+        blood:"Hb 148 г/л; лейкоциты 8.1×10⁹/л"
+    }
+},
+
+{
+    id:"poison",
+    name:"Дмитрий Орлов",
+    age:39,
+    sex:"мужчина",
+    icon:"😵",
+    priority:1,
+    department:"icu",
+    complaint:"Доставлен в спутанном состоянии. Родственники нашли рядом упаковки лекарств.",
+    hiddenDiagnosis:"Острое отравление лекарственным препаратом",
+    alternatives:[
+        "Острое отравление лекарственным препаратом",
+        "Инсульт",
+        "Гипогликемия",
+        "Алкогольное опьянение"
+    ],
+    vitals:{
+        bp:"98/65",
+        pulse:58,
+        spo2:93,
+        temp:35.9,
+        resp:11
+    },
+    history:[
+        ["Анамнез","Полностью собрать пока невозможно."],
+        ["Окружение","Рядом обнаружены упаковки лекарств."],
+        ["Сознание","Спутанное."],
+        ["Аллергии","Неизвестно."],
+        ["Рвота","Была один раз до приезда."]
+    ],
+    exam:[
+        ["Дыхание","Редкое."],
+        ["Зрачки","Сужены."],
+        ["Кожа","Холодная."],
+        ["Сознание","Отвечает на обращение непоследовательно."],
+        ["Травма","Явных признаков нет."]
+    ],
+    tests:{
+        glucose:"4.9 ммоль/л",
+        blood:"Hb 146 г/л; лейкоциты 10.3×10⁹/л",
+        tox:"Обнаружен лекарственный препарат в биоматериале."
+    }
+},
+
+{
+    id:"asthma",
+    name:"Ольга Морозова",
+    age:22,
+    sex:"женщина",
+    icon:"👩",
+    priority:2,
+    department:"therapy",
+    complaint:"Тяжело дышать, свистящее дыхание, не может нормально сделать вдох.",
+    hiddenDiagnosis:"Острое обострение бронхиальной астмы",
+    alternatives:[
+        "Острое обострение бронхиальной астмы",
+        "Инфаркт миокарда",
+        "Пневмония",
+        "Паническая атака"
+    ],
+    vitals:{
+        bp:"135/84",
+        pulse:118,
+        spo2:89,
+        temp:36.9,
+        resp:30
+    },
+    history:[
+        ["Астма","Диагноз установлен несколько лет назад."],
+        ["Ингалятор","Есть, но использовала один раз без выраженного эффекта."],
+        ["Аллергии","Весной часто ухудшается состояние."],
+        ["Боль","Боли в груди нет."],
+        ["Температура","Лихорадки не было."]
+    ],
+    exam:[
+        ["Дыхание","Выраженное свистящее дыхание."],
+        ["Речь","Говорит короткими фразами."],
+        ["Кожа","Без выраженного цианоза."],
+        ["Сознание","Сохранено."]
+    ],
+    tests:{
+        blood:"Без выраженного воспалительного сдвига."
+    }
+},
+
+{
+    id:"fever",
+    name:"Анна Белова",
+    age:44,
+    sex:"женщина",
+    icon:"👩",
+    priority:3,
+    department:"infectious",
+    complaint:"Высокая температура, слабость, озноб и ломота.",
+    hiddenDiagnosis:"Острое инфекционное заболевание",
+    alternatives:[
+        "Острое инфекционное заболевание",
+        "Инфаркт",
+        "Перелом",
+        "Аллергическая реакция"
+    ],
+    vitals:{
+        bp:"118/76",
+        pulse:108,
+        spo2:97,
+        temp:39.1,
+        resp:21
+    },
+    history:[
+        ["Начало","Три дня назад."],
+        ["Контакты","На работе несколько человек болели."],
+        ["Кашель","Есть."],
+        ["Аллергии","Отрицает."],
+        ["Лекарства","Принимала жаропонижающее."]
+    ],
+    exam:[
+        ["Горло","Покраснение."],
+        ["Лёгкие","Слышны дополнительные дыхательные шумы."],
+        ["Сознание","Ясное."],
+        ["Кожа","Горячая."]
+    ],
+    tests:{
+        blood:"Лейкоциты 14.2×10⁹/л; CRP повышен.",
+        xray:"Инфильтративные изменения требуют клинической оценки."
+    }
+},
+
+{
+    id:"fracture",
+    name:"Роман Егоров",
+    age:35,
+    sex:"мужчина",
+    icon:"🧑",
+    priority:2,
+    department:"surgery",
+    complaint:"Упал с велосипеда. Сильная боль в голени, не может наступить на ногу.",
+    hiddenDiagnosis:"Травма голени с подозрением на перелом",
+    alternatives:[
+        "Травма голени с подозрением на перелом",
+        "Растяжение",
+        "Тромбоз",
+        "Ожог"
+    ],
+    vitals:{
+        bp:"130/82",
+        pulse:104,
+        spo2:99,
+        temp:36.6,
+        resp:19
+    },
+    history:[
+        ["Механизм","Падение на бок с ударом голени."],
+        ["Время","30 минут назад."],
+        ["Сознание","Не терял."],
+        ["Антикоагулянты","Не принимает."],
+        ["Аллергии","Нет."]
+    ],
+    exam:[
+        ["Отёк","Выраженный локальный отёк."],
+        ["Деформация","Есть подозрение на деформацию."],
+        ["Чувствительность","Сохранена."],
+        ["Стопа","Тёплая, пульс определяется."]
+    ],
+    tests:{
+        xray:"Линия перелома в области голени."
+    }
+},
+
+{
+    id:"allergy",
+    name:"Екатерина Смирнова",
+    age:28,
+    sex:"женщина",
+    icon:"👩",
+    priority:1,
+    department:"icu",
+    complaint:"После еды появились отёк губ, сыпь и стало трудно дышать.",
+    hiddenDiagnosis:"Тяжёлая аллергическая реакция",
+    alternatives:[
+        "Тяжёлая аллергическая реакция",
+        "Пневмония",
+        "Инсульт",
+        "Гастрит"
+    ],
+    vitals:{
+        bp:"78/49",
+        pulse:128,
+        spo2:87,
+        temp:36.5,
+        resp:29
+    },
+    history:[
+        ["Начало","Через несколько минут после еды."],
+        ["Аллергии","Ранее была реакция на орехи."],
+        ["Кожа","Распространённая крапивница."],
+        ["Дыхание","Затруднено."],
+        ["Сознание","Сохраняется, но состояние ухудшается."]
+    ],
+    exam:[
+        ["Губы","Отёк."],
+        ["Дыхание","Свистящее, затруднённое."],
+        ["Кожа","Крапивница."],
+        ["Давление","Снижено."]
+    ],
+    tests:{
+        blood:"Без немедленного диагностического результата."
+    }
+},
+
+{
+    id:"abdomen",
+    name:"Павел Никитин",
+    age:41,
+    sex:"мужчина",
+    icon:"👨",
+    priority:2,
+    department:"surgery",
+    complaint:"Сильная боль в правой нижней части живота, тошнота.",
+    hiddenDiagnosis:"Острый хирургический живот, подозрение на аппендицит",
+    alternatives:[
+        "Острый хирургический живот, подозрение на аппендицит",
+        "Острый гастрит",
+        "Мигрень",
+        "Бронхиальная астма"
+    ],
+    vitals:{
+        bp:"124/79",
+        pulse:106,
+        spo2:98,
+        temp:38.0,
+        resp:20
+    },
+    history:[
+        ["Начало","Боль началась около 10 часов назад."],
+        ["Локализация","Сначала болело около пупка, затем справа внизу."],
+        ["Тошнота","Есть."],
+        ["Стул","Без особенностей."],
+        ["Аллергии","Нет."]
+    ],
+    exam:[
+        ["Живот","Болезненность справа внизу."],
+        ["Температура","Повышена."],
+        ["Перитонеальные симптомы","Подозрительные."],
+        ["Сознание","Ясное."]
+    ],
+    tests:{
+        blood:"Лейкоциты 15.1×10⁹/л; нейтрофильный сдвиг.",
+        ultrasound:"Изменения требуют оценки хирурга."
+    }
+},
+
+{
+    id:"syncope",
+    name:"Мария Лебедева",
+    age:19,
+    sex:"женщина",
+    icon:"👩",
+    priority:2,
+    department:"therapy",
+    complaint:"Потеряла сознание в магазине, сейчас слабость и головокружение.",
+    hiddenDiagnosis:"Синкопальное состояние",
+    alternatives:[
+        "Синкопальное состояние",
+        "Острый инсульт",
+        "Ожог",
+        "Острый аппендицит"
+    ],
+    vitals:{
+        bp:"100/66",
+        pulse:96,
+        spo2:99,
+        temp:36.4,
+        resp:17
+    },
+    history:[
+        ["Сознание","Потеряла примерно на 20 секунд."],
+        ["Перед событием","Долго стояла и почти не ела."],
+        ["Боль","Нет."],
+        ["Судороги","Очевидцы не отмечали."],
+        ["Беременность","Отрицает."]
+    ],
+    exam:[
+        ["Неврология","Грубого дефицита нет."],
+        ["Сознание","Ясное."],
+        ["Кожа","Бледная."],
+        ["Ходьба","Самостоятельная."]
+    ],
+    tests:{
+        glucose:"3.7 ммоль/л",
+        ecg:"Синусовый ритм без очевидных острых изменений."
+    }
+},
+
+{
+    id:"child",
+    name:"Миша Крылов",
+    age:8,
+    sex:"мальчик",
+    icon:"🧒",
+    priority:2,
+    department:"pediatrics",
+    complaint:"Высокая температура, кашель, ребёнок вялый.",
+    hiddenDiagnosis:"Острое респираторное заболевание",
+    alternatives:[
+        "Острое респираторное заболевание",
+        "Перелом",
+        "Ожог",
+        "Инсульт"
+    ],
+    vitals:{
+        bp:"104/67",
+        pulse:116,
+        spo2:94,
+        temp:38.7,
+        resp:25
+    },
+    history:[
+        ["Начало","Вчера вечером."],
+        ["Кашель","Есть."],
+        ["Аппетит","Снижен."],
+        ["Рвота","Один раз утром."],
+        ["Аллергии","Со слов матери — нет."]
+    ],
+    exam:[
+        ["Горло","Покраснение."],
+        ["Дыхание","Умеренно учащено."],
+        ["Сознание","Контакт доступен."],
+        ["Кожа","Тёплая."]
+    ],
+    tests:{
+        blood:"Лейкоциты умеренно повышены.",
+        xray:"Без очевидной крупной очаговой патологии."
+    }
+}
+
+];
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let state = {
+    name:"",
+    profession:"feldsher",
+    level:1,
+    xp:0,
+    money:0,
+    reputation:100,
+
+    shift:{
+        active:false,
+        minute:0,
+        max:480,
+        patients:0,
+        successful:0,
+        mistakes:0
+    },
+
+    queue:[],
+    current:null,
+
+    screen:"dashboard",
+
+    music:false,
+
+    stats:{
+        examinations:0,
+        blood:0,
+        swabs:0,
+        ecg:0,
+        xray:0,
+        ultrasound:0,
+        bandages:0,
+        diagnoses:0,
+        emergencies:0
+    },
+
+    settings:{
+        sound:true
+    }
+};
+
+/* =========================================================
+   SAVE / LOAD
+   ========================================================= */
+
+function save(){
+    localStorage.setItem(SAVE_KEY,JSON.stringify(state));
+}
+
+function load(){
+    try{
+        const data=JSON.parse(localStorage.getItem(SAVE_KEY));
+        if(data) state=Object.assign(state,data);
+    }catch(e){}
+}
+
+function resetGame(){
+    if(!confirm("Удалить весь прогресс?")) return;
+    localStorage.removeItem(SAVE_KEY);
+    location.reload();
+}
+
+/* =========================================================
+   UTILS
+   ========================================================= */
+
+function uid(){
+    return Math.random().toString(36).slice(2)+Date.now();
+}
+
+function xpNeed(){
+    return 100+(state.level-1)*75;
+}
+
+function addXP(amount){
+    state.xp+=amount;
+
+    while(state.xp>=xpNeed()){
+        state.xp-=xpNeed();
+        state.level++;
+        toast("Новый уровень: "+state.level+" ⭐");
+    }
+
+    save();
+}
+
+function toast(text,type=""){
+    const el=$("toast");
+    el.textContent=text;
+    el.className="toast show "+type;
+
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer=setTimeout(()=>{
+        el.className="toast";
+    },2800);
+}
+
+function openModal(title,body){
+    $("modalTitle").textContent=title;
+    $("modalBody").innerHTML=body;
+    $("modal").classList.add("show");
+}
+
+function closeModal(){
+    $("modal").classList.remove("show");
+}
+
+function esc(s){
+    return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;");
+}
+
+/* =========================================================
+   PATIENT GENERATION
+   ========================================================= */
+
+function createPatient(template){
+    return {
+        uid:uid(),
+        caseId:template.id,
+
+        name:template.name,
+        age:template.age,
+        sex:template.sex,
+        icon:template.icon,
+
+        priority:template.priority,
+        department:template.department,
+
+        complaint:template.complaint,
+        diagnosis:template.hiddenDiagnosis,
+        alternatives:[...template.alternatives],
+
+        vitals:{...template.vitals},
+        history:[...template.history],
+        exam:[...template.exam],
+        tests:{...template.tests},
+
+        asked:[],
+        examined:[],
+        results:{},
+
+        procedures:{
+            blood:false,
+            swab:false,
+            ecg:false,
+            xray:false,
+            ultrasound:false,
+            wound:false,
+            burn:false
+        },
+
+        triage:null,
+        suspected:null,
+        destination:null,
+
+        procedure:null,
+
+        errors:0,
+        deterioration:0,
+
+        status:"waiting",
+        startedAt:Date.now()
+    };
+}
+
+function generateQueue(){
+    const shuffled=[...CASES].sort(()=>Math.random()-.5);
+
+    state.queue=shuffled.slice(0,6).map(createPatient);
+
+    state.queue.sort((a,b)=>a.priority-b.priority);
+}
+
+/* =========================================================
+   SHIFT
+   ========================================================= */
+
+function startShift(){
+    if(state.shift.active){
+        toast("Смена уже идёт");
+        return;
+    }
+
+    generateQueue();
+
+    state.shift={
+        active:true,
+        minute:0,
+        max:480,
+        patients:0,
+        successful:0,
+        mistakes:0
+    };
+
+    state.current=null;
+    state.screen="queue";
+
+    toast("Смена началась. В приёмном отделении пациенты.");
+    save();
+    render();
+}
+
+function endShift(){
+    state.shift.active=false;
+
+    const s=state.shift;
+
+    const base=300+state.level*50;
+    const bonus=s.successful*75;
+    const penalty=s.mistakes*35;
+
+    const salary=Math.max(0,base+bonus-penalty);
+
+    state.money+=salary;
+
+    openModal(
+        "Смена завершена",
+        `
+        <div class="grid grid-2">
+            <div class="result">
+                <strong>Пациенты</strong>
+                <span>${s.patients}</span>
+            </div>
+            <div class="result">
+                <strong>Успешно</strong>
+                <span>${s.successful}</span>
+            </div>
+            <div class="result">
+                <strong>Ошибки</strong>
+                <span>${s.mistakes}</span>
+            </div>
+            <div class="result">
+                <strong>Заработано</strong>
+                <span>${salary} ₽</span>
+            </div>
+        </div>
+
+        <br>
+
+        <button class="primary" onclick="closeModal();go('dashboard')">
+            Вернуться в больницу
+        </button>
+        `
+    );
+
+    save();
+}
+
+/* Simulated shift clock: advances when meaningful actions occur */
+function advanceShift(minutes){
+    if(!state.shift.active) return;
+
+    state.shift.minute+=minutes;
+
+    checkDeterioration();
+
+    if(state.shift.minute>=state.shift.max){
+        state.shift.minute=state.shift.max;
+        endShift();
+    }
+
+    save();
+}
+
+function checkDeterioration(){
+    state.queue.forEach(p=>{
+        if(p.status==="waiting" && p.priority===1){
+            p.deterioration++;
+
+            if(p.deterioration>=4){
+                p.status="critical";
+                toast(p.name+" нуждается в срочной помощи!","bad");
+            }
+        }
+    });
+}
+
+/* =========================================================
+   RENDER CORE
+   ========================================================= */
+
+function render(){
+    if(!state.name){
+        renderLogin();
+        return;
+    }
+
+    renderShell();
+}
+
+function renderLogin(){
+    $("app").innerHTML=`
+        <div class="login">
+            <div class="login-card">
+
+                <div class="logo">
+                    <div class="logo-icon">⚕️</div>
+                    <div>
+                        <h1>MED SHIFT</h1>
+                        <p>REMAKE 1.0 • Hospital Simulator</p>
+                    </div>
+                </div>
+
+                <div class="login-text">
+                    Здесь нет готового ответа после одного клика.
+                    Собирай анамнез, осматривай пациента, выбирай
+                    исследования, выполняй процедуры по этапам,
+                    интерпретируй результаты и решай, куда направить пациента.
+                </div>
+
+                <input
+                    id="loginName"
+                    class="name-input"
+                    placeholder="Твоё имя"
+                    maxlength="24"
+                >
+
+                <button class="primary" onclick="login()">
+                    Войти в больницу
+                </button>
+
+            </div>
+        </div>
+    `;
+}
+
+function login(){
+    const n=$("loginName").value.trim();
+
+    if(!n){
+        toast("Введи имя");
+        return;
+    }
+
+    state.name=n;
+    state.profession="feldsher";
+
+    save();
+    render();
+}
+
+function renderShell(){
+
+    const prof=DB.professions[state.profession];
+
+    $("app").innerHTML=`
+
+    <div class="shell">
+
+        <aside class="sidebar">
+
+            <div class="side-brand">
+                <strong>⚕ MED SHIFT</strong>
+                <span>REMAKE 1.0</span>
+            </div>
+
+            <nav class="nav">
+
+                <button class="${state.screen==="dashboard"?"active":""}"
+                    onclick="go('dashboard')">🏠 Главная</button>
+
+                <button class="${state.screen==="queue"?"active":""}"
+                    onclick="go('queue')">🚑 Приём</button>
+
+                <button class="${state.screen==="hospital"?"active":""}"
+                    onclick="go('hospital')">🏥 Отделения</button>
+
+                <button class="${state.screen==="career"?"active":""}"
+                    onclick="go('career')">📈 Карьера</button>
+
+                <button class="${state.screen==="settings"?"active":""}"
+                    onclick="go('settings')">⚙️</button>
+
+            </nav>
+
+            <div class="profile-mini">
+                <b>${esc(state.name)}</b>
+                <small>${prof.icon} ${prof.name} • Ур. ${state.level}</small>
+            </div>
+
+        </aside>
+
+        <main class="main">
+
+            ${renderTopbar()}
+            ${renderScreen()}
+
+        </main>
+
+    </div>
+    `;
+}
+
+function renderTopbar(){
+
+    const prof=DB.professions[state.profession];
+
+    return `
+        <div class="topbar">
+
+            <div class="top-left">
+                <h2>${prof.icon} ${prof.name}</h2>
+                <p>
+                    ${state.shift.active
+                        ? "Смена • "+formatShift()
+                        : "Смена не начата"}
+                </p>
+            </div>
+
+            <div class="top-stats">
+
+                <div class="stat">
+                    <span>Уровень</span>
+                    <b>${state.level}</b>
+                </div>
+
+                <div class="stat">
+                    <span>Опыт</span>
+                    <b>${state.xp}/${xpNeed()}</b>
+                </div>
+
+                <div class="stat">
+                    <span>₽</span>
+                    <b>${state.money}</b>
+                </div>
+
+                <div class="stat">
+                    <span>Репутация</span>
+                    <b>${state.reputation}</b>
+                </div>
+
+            </div>
+
+        </div>
+    `;
+}
+
+function formatShift(){
+
+    const m=state.shift.minute;
+
+    const h=Math.floor(m/60);
+    const min=m%60;
+
+    return `${String(h).padStart(2,"0")}:${String(min).padStart(2,"0")}`;
+}
+
+function go(screen){
+    state.screen=screen;
+
+    if(screen!=="patient"){
+        state.current=null;
+    }
+
+    render();
+}
+
+/* =========================================================
+   SCREEN ROUTER
+   ========================================================= */
+
+function renderScreen(){
+
+    switch(state.screen){
+
+        case"queue":
+            return renderQueue();
+
+        case"patient":
+            return renderPatient();
+
+        case"hospital":
+            return renderHospital();
+
+        case"career":
+            return renderCareer();
+
+        case"settings":
+            return renderSettings();
+
+        default:
+            return renderDashboard();
+    }
+}
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+function renderDashboard(){
+
+    const xp=Math.round(state.xp/xpNeed()*100);
+
+    return `
+
+    <section class="hero">
+
+        <h1>
+            ${state.shift.active
+                ? "Смена продолжается"
+                : "Добро пожаловать в больницу"}
+        </h1>
+
+        <p>
+            ${state.shift.active
+                ? "Следи за приоритетами пациентов. Экстренные случаи нельзя откладывать ради второстепенных исследований."
+                : "Начни смену, чтобы получить поток пациентов и реальные игровые клинические задачи."}
+        </p>
+
+        <br>
+
+        ${
+            state.shift.active
+            ?
+            `<button class="action red" onclick="endShift()">
+                Завершить смену
+            </button>`
+            :
+            `<button class="action blue" onclick="startShift()">
+                ▶ Начать смену
+            </button>`
+        }
+
+    </section>
+
+    <div class="grid grid-3">
+
+        <div class="card">
+            <div class="card-title">
+                <h3>⭐ Прогресс</h3>
+            </div>
+            <div class="big-number">${state.level}</div>
+            <div class="muted">уровень</div>
+            <div class="progress">
+                <div style="width:${xp}%"></div>
+            </div>
+            <small class="muted">
+                ${state.xp}/${xpNeed()} XP
+            </small>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h3>🏥 Пациенты</h3>
+            </div>
+            <div class="big-number">
+                ${state.stats.diagnoses}
+            </div>
+            <div class="muted">завершённых случаев</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h3>🚨 Экстренные</h3>
+            </div>
+            <div class="big-number">
+                ${state.stats.emergencies}
+            </div>
+            <div class="muted">экстренных ситуаций</div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="grid grid-2">
+
+        <div class="card">
+            <div class="card-title">
+                <h3>📋 Что изменилось в REMAKE</h3>
+            </div>
+
+            <div class="result">
+                <strong>Не угадывай диагноз</strong>
+                <span>Сначала собери данные, потом принимай решение.</span>
+            </div>
+
+            <div class="result">
+                <strong>Процедуры по этапам</strong>
+                <span>Забор крови, перевязка, ЭКГ и другие действия требуют правильной последовательности.</span>
+            </div>
+
+            <div class="result">
+                <strong>Ошибки имеют последствия</strong>
+                <span>Ненужное исследование или пропущенная проблема ухудшают результат случая.</span>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h3>📊 Статистика</h3>
+            </div>
+
+            <div class="tags">
+
+                <span class="tag">
+                    Осмотров: ${state.stats.examinations}
+                </span>
+
+                <span class="tag">
+                    Кровь: ${state.stats.blood}
+                </span>
+
+                <span class="tag">
+                    Мазки: ${state.stats.swabs}
+                </span>
+
+                <span class="tag">
+                    ЭКГ: ${state.stats.ecg}
+                </span>
+
+                <span class="tag">
+                    Рентген: ${state.stats.xray}
+                </span>
+
+                <span class="tag">
+                    УЗИ: ${state.stats.ultrasound}
+                </span>
+
+                <span class="tag">
+                    Перевязки: ${state.stats.bandages}
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+    `;
+}
+
+/* =========================================================
+   QUEUE
+   ========================================================= */
+
+function renderQueue(){
+
+    if(!state.shift.active){
+
+        return `
+        <div class="card shift-box">
+            <div class="big-number">🚑</div>
+            <br>
+            <h2>Приёмное отделение</h2>
+            <p class="muted">
+                Сначала начни смену.
+            </p>
+            <br>
+            <button class="action blue" onclick="startShift()">
+                Начать смену
+            </button>
+        </div>
+        `;
+    }
+
+    const waiting=state.queue.filter(
+        p=>p.status==="waiting"||p.status==="critical"
+    );
+
+    return `
+
+    <div class="card">
+
+        <div class="card-title">
+            <div>
+                <h3>🚑 Поток пациентов</h3>
+                <small class="muted">
+                    Сначала оцени срочность
+                </small>
+            </div>
+
+            <span class="tag">
+                ${waiting.length} ожидают
+            </span>
+        </div>
+
+        <div class="patient-list">
+
+            ${
+                waiting.length
+                ?
+                waiting.map(renderPatientRow).join("")
+                :
+                `<div class="result">
+                    <strong>Очередь пуста</strong>
+                    <span>Нажми «Новый вызов», чтобы получить пациента.</span>
+                </div>`
+            }
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="grid grid-2">
+
+        <div class="card">
+            <div class="card-title">
+                <h3>📋 Состояние смены</h3>
+            </div>
+
+            <div class="result">
+                <strong>Время</strong>
+                <span>${formatShift()} / 08:00</span>
+            </div>
+
+            <div class="result">
+                <strong>Принято пациентов</strong>
+                <span>${state.shift.patients}</span>
+            </div>
+
+            <div class="result">
+                <strong>Ошибки</strong>
+                <span>${state.shift.mistakes}</span>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="card-title">
+                <h3>🚨 Приоритеты</h3>
+            </div>
+
+            <div class="tags">
+                <span class="tag red">P1 — немедленно</span>
+                <span class="tag yellow">P2 — срочно</span>
+                <span class="tag green">P3 — планово</span>
+            </div>
+
+            <br>
+
+            <button class="action red" onclick="endShift()">
+                Завершить смену
+            </button>
+        </div>
+
+    </div>
+    `;
+}
+
+function renderPatientRow(p){
+
+    const pClass=p.priority===1?"p1":p.priority===2?"p2":"p3";
+
+    return `
+        <button class="patient-row" onclick="openPatient('${p.uid}')">
+
+            <div class="avatar">${p.icon}</div>
+
+            <div>
+                <strong>
+                    ${esc(p.name)}, ${p.age} лет
+                </strong>
+
+                <small>
+                    ${esc(p.complaint)}
+                </small>
+            </div>
+
+            <div class="priority ${pClass}">
+                P${p.priority}
+            </div>
+
+        </button>
+    `;
+}
+
+/* =========================================================
+   PATIENT
+   ========================================================= */
+
+function openPatient(id){
+
+    const p=state.queue.find(x=>x.uid===id);
+
+    if(!p) return;
+
+    state.current=id;
+
+    if(p.status==="waiting"){
+        p.status="active";
+        state.shift.patients++;
+    }
+
+    state.screen="patient";
+
+    addLog(p,"Пациент принят в работу.","info");
+
+    save();
+    render();
+}
+
+function currentPatient(){
+    return state.queue.find(p=>p.uid===state.current);
+}
+
+function addLog(p,text,type=""){
+    if(!p.log) p.log=[];
+    p.log.unshift({
+        text,
+        type,
+        time:new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"})
+    });
+}
+
+function renderPatient(){
+
+    const p=currentPatient();
+
+    if(!p){
+        return `
+        <div class="card">
+            Пациент не найден.
+        </div>
+        `;
+    }
+
+    return `
+
+    <div class="patient-layout">
+
+        <div>
+
+            ${renderPatientMain(p)}
+
+        </div>
+
+        <div>
+
+            ${renderPatientTools(p)}
+
+        </div>
+
+    </div>
+    `;
+}
+
+function renderPatientMain(p){
+
+    return `
+
+    <div class="card">
+
+        <div class="patient-header">
+
+            <div class="patient-face">${p.icon}</div>
+
+            <div>
+                <div class="patient-name">
+                    ${esc(p.name)}
+                </div>
+
+                <div class="patient-meta">
+                    ${p.age} лет • ${p.sex}
+                </div>
+
+                <div class="tags" style="margin-top:7px">
+
+                    <span class="tag ${
+                        p.priority===1?"red":
+                        p.priority===2?"yellow":"green"
+                    }">
+                        Приоритет P${p.priority}
+                    </span>
+
+                    <span class="tag">
+                        ${departmentName(p.department)}
+                    </span>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="complaint">
+            <strong>Жалоба</strong><br>
+            ${esc(p.complaint)}
+        </div>
+
+        <div class="section">
+
+            <h4>📈 Текущие показатели</h4>
+
+            <div class="vitals">
+
+                ${vital("АД",p.vitals.bp,pressureClass(p))}
+                ${vital("Пульс",p.vitals.pulse+" /мин",p.vitals.pulse>110?"danger":p.vitals.pulse>100?"warning":"")}
+                ${vital("SpO₂",p.vitals.spo2+" %",p.vitals.spo2<90?"danger":p.vitals.spo2<94?"warning":"")}
+                ${vital("Температура",p.vitals.temp+" °C",p.vitals.temp>=38?"warning":"")}
+                ${vital("Дыхание",p.vitals.resp+" /мин",p.vitals.resp>25?"danger":p.vitals.resp>20?"warning":"")}
+                ${vital("Сознание",consciousnessText(p),p.deterioration>2?"danger":"")}
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h4>🗣 Анамнез</h4>
+
+            <div class="question-list">
+
+                ${
+                    p.history.map((h,i)=>`
+
+                        <button
+                            class="question ${p.asked.includes(i)?"asked":""}"
+                            onclick="askHistory(${i})"
+                            ${p.asked.includes(i)?"disabled":""}
+                        >
+                            ${p.asked.includes(i)?"✓ ":""}${esc(h[0])}
+                        </button>
+
+                    `).join("")
+                }
+
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h4>🩺 Осмотр</h4>
+
+            <div class="question-list">
+
+                ${
+                    p.exam.map((e,i)=>`
+
+                        <button
+                            class="question ${p.examined.includes(i)?"asked":""}"
+                            onclick="performExam(${i})"
+                            ${p.examined.includes(i)?"disabled":""}
+                        >
+                            ${p.examined.includes(i)?"✓ ":""}${esc(e[0])}
+                        </button>
+
+                    `).join("")
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    ${renderResults(p)}
+
+    <br>
+
+    ${renderDiagnosis(p)}
+
+    `;
+}
+
+function vital(name,value,cl=""){
+    return `
+        <div class="vital ${cl}">
+            <small>${name}</small>
+            <b>${value}</b>
+        </div>
+    `;
+}
+
+function pressureClass(p){
+    const x=Number(p.vitals.bp.split("/")[0]);
+    if(x<90||x>180)return"danger";
+    if(x<100||x>160)return"warning";
+    return"";
+}
+
+function consciousnessText(p){
+    if(p.id==="poison" && p.deterioration>3) return"Угнетено";
+    return"Ясное";
+}
+
+function departmentName(id){
+    const d=DB.departments.find(x=>x[0]===id);
+    return d?d[2]+" "+d[1]:id;
+}
+
+/* =========================================================
+   HISTORY / EXAM
+   ========================================================= */
+
+function askHistory(index){
+
+    const p=currentPatient();
+
+    if(!p||p.asked.includes(index))return;
+
+    p.asked.push(index);
+
+    const item=p.history[index];
+
+    addLog(
+        p,
+        "Анамнез: "+item[0]+" — "+item[1],
+        "info"
+    );
+
+    advanceShift(3);
+
+    render();
+}
+
+function performExam(index){
+
+    const p=currentPatient();
+
+    if(!p||p.examined.includes(index))return;
+
+    p.examined.push(index);
+
+    const item=p.exam[index];
+
+    state.stats.examinations++;
+
+    addLog(
+        p,
+        "Осмотр: "+item[0]+" — "+item[1],
+        "good"
+    );
+
+    advanceShift(2);
+
+    render();
+}
+
+/* =========================================================
+   PATIENT TOOLS
+   ========================================================= */
+
+function renderPatientTools(p){
+
+    return `
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>🧰 Рабочее место</h3>
+        </div>
+
+        <div class="action-grid">
+
+            <button class="action blue"
+                onclick="triageModal()">
+                🚨 Триаж
+            </button>
+
+            <button class="action"
+                onclick="startProcedure('blood')">
+                🩸 Забор крови
+            </button>
+
+            <button class="action"
+                onclick="startProcedure('swab')">
+                🧫 Мазок
+            </button>
+
+            <button class="action"
+                onclick="startProcedure('ecg')">
+                🫀 ЭКГ
+            </button>
+
+            <button class="action"
+                onclick="startProcedure('xray')">
+                🩻 Рентген
+            </button>
+
+            <button class="action"
+                onclick="startProcedure('ultrasound')">
+                📡 УЗИ
+            </button>
+
+            <button class="action orange"
+                onclick="startProcedure('wound')">
+                🩹 Обработка раны
+            </button>
+
+            <button class="action orange"
+                onclick="startProcedure('burn')">
+                🔥 Обработка ожога
+            </button>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>📝 Журнал пациента</h3>
+        </div>
+
+        <div class="log">
+
+            ${
+                (p.log||[]).map(x=>`
+
+                    <div class="log-entry ${x.type}">
+                        <small>${x.time}</small><br>
+                        ${esc(x.text)}
+                    </div>
+
+                `).join("")
+                ||
+                `<div class="muted">
+                    Действий пока нет.
+                </div>`
+            }
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>🎯 Следующий шаг</h3>
+        </div>
+
+        <p class="muted">
+            После сбора данных необходимо выбрать
+            рабочую гипотезу и дальнейшую тактику.
+        </p>
+
+        <br>
+
+        <button class="action green"
+            onclick="decisionModal()">
+            🧠 Принять клиническое решение
+        </button>
+
+    </div>
+
+    <br>
+
+    <button class="action red"
+        style="width:100%"
+        onclick="leavePatient()">
+        ← Вернуть пациента в очередь
+    </button>
+
+    `;
+}
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+function renderResults(p){
+
+    const keys=Object.keys(p.results);
+
+    return `
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>🧪 Результаты исследований</h3>
+
+            <span class="tag">
+                ${keys.length}
+            </span>
+        </div>
+
+        ${
+            keys.length
+            ?
+            keys.map(k=>`
+
+                <div class="result">
+                    <strong>${testName(k)}</strong>
+                    <span>${esc(p.results[k])}</span>
+                </div>
+
+            `).join("")
+            :
+            `<div class="muted">
+                Исследования ещё не выполнены.
+            </div>`
+        }
+
+    </div>
+    `;
+}
+
+function testName(k){
+
+    const names={
+        blood:"Общий анализ крови",
+        glucose:"Глюкоза",
+        ecg:"ЭКГ",
+        xray:"Рентген",
+        ultrasound:"УЗИ",
+        tox:"Токсикологическое исследование",
+        ct:"КТ",
+        swab:"Мазок
+    };
+
+    return names[k]||k;
+}
+
+/* =========================================================
+   DIAGNOSIS
+   ========================================================= */
+
+function renderDiagnosis(p){
+
+    return `
+
+    <div class="card">
+
+        <div class="card-title">
+            <div>
+                <h3>🧠 Рабочая гипотеза</h3>
+                <small class="muted">
+                    Диагноз не показывается заранее
+                </small>
+            </div>
+        </div>
+
+        <div class="diagnosis-grid">
+
+            ${
+                p.alternatives.map((d,i)=>`
+
+                    <button
+                        class="diag ${p.suspected===i?"selected":""}"
+                        onclick="selectDiagnosis(${i})"
+                    >
+                        ${p.suspected===i?"✓ ":""}${esc(d)}
+                    </button>
+
+                `).join("")
+            }
+
+        </div>
+
+    </div>
+    `;
+}
+
+function selectDiagnosis(index){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    p.suspected=index;
+
+    addLog(
+        p,
+        "Выбрана рабочая гипотеза: "+p.alternatives[index],
+        "info"
+    );
+
+    save();
+    render();
+}
+
+/* =========================================================
+   TRIAGE
+   ========================================================= */
+
+function triageModal(){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    openModal(
+        "🚨 Триаж пациента",
+        `
+        <p class="muted">
+            Определи срочность на основании текущего состояния.
+            В игре оценка является частью игровой механики.
+        </p>
+
+        <br>
+
+        <div class="choice-grid">
+
+            <button class="choice"
+                onclick="setTriage(1)">
+                🔴 P1<br>
+                Немедленная помощь
+            </button>
+
+            <button class="choice"
+                onclick="setTriage(2)">
+                🟠 P2<br>
+                Срочная помощь
+            </button>
+
+            <button class="choice"
+                onclick="setTriage(3)">
+                🟢 P3<br>
+                Может ожидать
+            </button>
+
+        </div>
+        `
+    );
+}
+
+function setTriage(value){
+
+    const p=currentPatient();
+
+    p.triage=value;
+
+    if(value!==p.priority){
+
+        p.errors++;
+
+        state.shift.mistakes++;
+        state.reputation=Math.max(0,state.reputation-2);
+
+        addLog(
+            p,
+            "Приоритет определён неправильно.",
+            "bad"
+        );
+
+        toast("Триаж требует пересмотра","bad");
+
+    }else{
+
+        addXP(10);
+
+        addLog(
+            p,
+            "Приоритет определён правильно: P"+value,
+            "good"
+        );
+
+        toast("Триаж выполнен правильно");
+    }
+
+    advanceShift(2);
+
+    closeModal();
+    render();
+}
+
+/* =========================================================
+   PROCEDURE ENGINE
+   ========================================================= */
+
+const PROCEDURES={
+
+    blood:{
+        title:"🩸 Забор венозной крови",
+        steps:[
+            {
+                title:"Подготовка",
+                text:"Выбери правильную подготовку.",
+                choices:[
+                    ["Проверить пациента и подготовить материалы",true],
+                    ["Сразу взять кровь без проверки",false],
+                    ["Начать с маркировки неизвестного образца",false]
+                ]
+            },
+            {
+                title:"Пробирка",
+                text:"Как действовать с образцом?",
+                choices:[
+                    ["Выбрать подходящую пробирку и подготовить её",true],
+                    ["Использовать любую пробирку",false],
+                    ["Смешать все образцы",false]
+                ]
+            },
+            {
+                title:"Место пункции",
+                text:"Выбери наиболее подходящий вариант.",
+                choices:[
+                    ["Оценить вену и выбрать доступное место",true],
+                    ["Пунктировать случайное место",false],
+                    ["Пунктировать область с выраженным воспалением",false]
+                ]
+            },
+            {
+                title:"Забор",
+                text:"Последовательность процедуры.",
+                choices:[
+                    ["Обработать место и выполнить забор стерильно",true],
+                    ["Пропустить обработку",false],
+                    ["Повторно касаться места после обработки",false]
+                ]
+            },
+            {
+                title:"Лаборатория",
+                text:"Что сделать с полученным материалом?",
+                choices:[
+                    ["Промаркировать и направить в лабораторию",true],
+                    ["Оставить пробирку без подписи",false],
+                    ["Отдать пациенту",false]
+                ]
+            }
+        ]
+    },
+
+    swab:{
+        title:"🧫 Взятие мазка",
+        steps:[
+            {
+                title:"Подготовка",
+                text:"Начальный этап.",
+                choices:[
+                    ["Проверить пациента и подготовить стерильный набор",true],
+                    ["Использовать открытый старый набор",false],
+                    ["Не идентифицировать пациента",false]
+                ]
+            },
+            {
+                title:"Зона",
+                text:"Выбор зоны зависит от поставленной задачи.",
+                choices:[
+                    ["Выбрать нужную анатомическую область по назначению",true],
+                    ["Брать материал случайно",false],
+                    ["Использовать несколько мест без причины",false]
+                ]
+            },
+            {
+                title:"Материал",
+                text:"Что важно?",
+                choices:[
+                    ["Не касаться рабочей части посторонних поверхностей",true],
+                    ["Положить тампон на стол",false],
+                    ["Повторно использовать тампон",false]
+                ]
+            },
+            {
+                title:"Маркировка",
+                text:"Финальный этап.",
+                choices:[
+                    ["Промаркировать образец и отправить в лабораторию",true],
+                    ["Оставить без данных",false],
+                    ["Выбросить образец",false]
+                ]
+            }
+        ]
+    },
+
+    ecg:{
+        title:"🫀 Электрокардиограмма",
+        steps:[
+            {
+                title:"Подготовка",
+                text:"Перед исследованием.",
+                choices:[
+                    ["Объяснить процедуру и обеспечить спокойное положение",true],
+                    ["Записывать ЭКГ во время активного движения",false],
+                    ["Не проверять состояние пациента",false]
+                ]
+            },
+            {
+                title:"Электроды",
+                text:"Главный игровой момент — корректное размещение.",
+                choices:[
+                    ["Разместить электроды согласно схеме исследования",true],
+                    ["Разместить их случайно",false],
+                    ["Поменять местами все электроды",false]
+                ]
+            },
+            {
+                title:"Запись",
+                text:"Получение качественной записи.",
+                choices:[
+                    ["Попросить пациента спокойно лежать и выполнить запись",true],
+                    ["Попросить двигаться",false],
+                    ["Сразу удалить запись",false]
+                ]
+            }
+        ]
+    },
+
+    xray:{
+        title:"🩻 Рентгенография",
+        steps:[
+            {
+                title:"Назначение",
+                text:"Перед исследованием.",
+                choices:[
+                    ["Проверить показание и область исследования",true],
+                    ["Сделать снимок любой части тела",false],
+                    ["Пропустить идентификацию",false]
+                ]
+            },
+            {
+                title:"Позиционирование",
+                text:"Пациент должен быть правильно расположен.",
+                choices:[
+                    ["Выбрать правильную проекцию для задачи",true],
+                    ["Повернуть пациента случайно",false],
+                    ["Снять область без жалоб",false]
+                ]
+            },
+            {
+                title:"Результат",
+                text:"После исследования.",
+                choices:[
+                    ["Получить изображение и добавить результат в карту",true],
+                    ["Сразу поставить диагноз без изображения",false],
+                    ["Удалить снимок",false]
+                ]
+            }
+        ]
+    },
+
+    ultrasound:{
+        title:"📡 Ультразвуковое исследование",
+        steps:[
+            {
+                title:"Задача",
+                text:"Что необходимо определить?",
+                choices:[
+                    ["Определить орган/область согласно клиническому вопросу",true],
+                    ["Исследовать случайную область",false],
+                    ["Не учитывать жалобы",false]
+                ]
+            },
+            {
+                title:"Исследование",
+                text:"Выполнение.",
+                choices:[
+                    ["Провести исследование выбранной области",true],
+                    ["Пропустить исследование",false],
+                    ["Сразу выдать диагноз",false]
+                ]
+            },
+            {
+                title:"Документация",
+                text:"Завершение.",
+                choices:[
+                    ["Зафиксировать полученное заключение",true],
+                    ["Изменить результат вручную",false],
+                    ["Не сохранять результат",false]
+                ]
+            }
+        ]
+    },
+
+    wound:{
+        title:"🩹 Обработка раны",
+        steps:[
+            {
+                title:"Осмотр",
+                text:"Сначала оцени повреждение.",
+                choices:[
+                    ["Осмотреть глубину, кровотечение и функцию конечности",true],
+                    ["Сразу закрыть рану",false],
+                    ["Игнорировать кровотечение",false]
+                ]
+            },
+            {
+                title:"Подготовка",
+                text:"Перед обработкой.",
+                choices:[
+                    ["Подготовить стерильный материал",true],
+                    ["Использовать загрязнённый материал",false],
+                    ["Касаться раны без необходимости",false]
+                ]
+            },
+            {
+                title:"Обработка",
+                text:"Основной этап.",
+                choices:[
+                    ["Выполнить обработку согласно выбранной тактике",true],
+                    ["Пропустить обработку",false],
+                    ["Использовать случайное вещество",false]
+                ]
+            },
+            {
+                title:"Повязка",
+                text:"Финальный этап.",
+                choices:[
+                    ["Наложить подходящую повязку и проверить кровотечение",true],
+                    ["Оставить рану открытой без причины",false],
+                    ["Наложить загрязнённый материал",false]
+                ]
+            }
+        ]
+    },
+
+    burn:{
+        title:"🔥 Обработка ожога",
+        steps:[
+            {
+                title:"Оценка",
+                text:"Сначала нужно понять характер повреждения.",
+                choices:[
+                    ["Оценить механизм, глубину и площадь поражения",true],
+                    ["Сразу закрыть ожог",false],
+                    ["Игнорировать площадь поражения",false]
+                ]
+            },
+            {
+                title:"Материал",
+                text:"Выбор дальнейшего действия.",
+                choices:[
+                    ["Подготовить подходящий материал для дальнейшей обработки",true],
+                    ["Использовать загрязнённый материал",false],
+                    ["Повреждать пузыри без необходимости",false]
+                ]
+            },
+            {
+                title:"Повязка",
+                text:"Финальный этап.",
+                choices:[
+                    ["Наложить подходящую защитную повязку",true],
+                    ["Плотно травмировать повреждённую поверхность",false],
+                    ["Оставить материал без фиксации",false]
+                ]
+            }
+        ]
+    }
+};
+
+function startProcedure(type){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    if(type==="blood" && p.procedures.blood){
+        toast("Кровь уже была взята");
+        return;
+    }
+
+    if(type==="ecg" && p.procedures.ecg){
+        toast("ЭКГ уже выполнена");
+        return;
+    }
+
+    p.procedure={
+        type,
+        step:0,
+        mistakes:0,
+        selected:null
+    };
+
+    openProcedureModal();
+
+}
+
+function openProcedureModal(){
+
+    const p=currentPatient();
+    const proc=PROCEDURES[p.procedure.type];
+
+    const step=proc.steps[p.procedure.step];
+
+    openModal(
+        proc.title,
+        renderProcedureStep(proc,step,p.procedure)
+    );
+}
+
+function renderProcedureStep(proc,step,progress){
+
+    return `
+
+        <div class="stepper">
+
+            ${
+                proc.steps.map((x,i)=>`
+
+                    <div class="step ${
+                        i<progress.step?"done":
+                        i===progress.step?"current":""
+                    }">
+                        ${i+1}. ${x.title}
+                    </div>
+
+                `).join("")
+            }
+
+        </div>
+
+        <div class="procedure-zone">
+
+            <div style="width:100%">
+
+                <div style="font-size:45px;margin-bottom:10px">
+                    🩺
+                </div>
+
+                <h3>${step.title}</h3>
+
+                <p class="muted" style="margin-top:8px">
+                    ${step.text}
+                </p>
+
+                <br>
+
+                <div class="choice-grid">
+
+                    ${
+                        step.choices.map((c,i)=>`
+
+                            <button class="choice"
+                                onclick="procedureChoice(${i})">
+                                ${esc(c[0])}
+                            </button>
+
+                        `).join("")
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="tags">
+            <span class="tag">
+                Этап ${progress.step+1}/${proc.steps.length}
+            </span>
+
+            <span class="tag ${
+                progress.mistakes?"red":"green"
+            }">
+                Ошибок: ${progress.mistakes}
+            </span>
+        </div>
+
+    `;
+}
+
+function procedureChoice(index){
+
+    const p=currentPatient();
+
+    if(!p||!p.procedure)return;
+
+    const proc=PROCEDURES[p.procedure.type];
+    const step=proc.steps[p.procedure.step];
+    const choice=step.choices[index];
+
+    if(!choice[1]){
+
+        p.procedure.mistakes++;
+        p.errors++;
+
+        state.shift.mistakes++;
+        state.reputation=Math.max(0,state.reputation-1);
+
+        addLog(
+            p,
+            "Ошибка во время процедуры: "+choice[0],
+            "bad"
+        );
+
+        toast("Неправильный этап. Процедура не завершена.","bad");
+
+        save();
+        openProcedureModal();
+        return;
+    }
+
+    addLog(
+        p,
+        "Этап выполнен: "+step.title,
+        "good"
+    );
+
+    p.procedure.step++;
+
+    advanceShift(3);
+
+    if(p.procedure.step>=proc.steps.length){
+
+        finishProcedure();
+
+    }else{
+
+        save();
+        openProcedureModal();
+
+    }
+}
+
+function finishProcedure(){
+
+    const p=currentPatient();
+    const type=p.procedure.type;
+
+    p.procedures[type]=true;
+
+    if(type==="blood"){
+        state.stats.blood++;
+        p.results.blood=p.tests.blood||"Материал получен. Существенных отклонений не выявлено.";
+    }
+
+    if(type==="swab"){
+        state.stats.swabs++;
+        p.results.swab="Материал принят лабораторией. Результат добавлен в карту.";
+    }
+
+    if(type==="ecg"){
+        state.stats.ecg++;
+        p.results.ecg=p.tests.ecg||"Синусовый ритм без очевидных острых изменений.";
+    }
+
+    if(type==="xray"){
+        state.stats.xray++;
+        p.results.xray=p.tests.xray||"Без очевидной патологии.";
+    }
+
+    if(type==="ultrasound"){
+        state.stats.ultrasound++;
+        p.results.ultrasound=p.tests.ultrasound||"Без значимых изменений.";
+    }
+
+    if(type==="wound"){
+        state.stats.bandages++;
+    }
+
+    if(type==="burn"){
+        state.stats.bandages++;
+    }
+
+    addXP(12);
+
+    addLog(
+        p,
+        "Процедура завершена: "+PROCEDURES[type].title,
+        "good"
+    );
+
+    p.procedure=null;
+
+    toast("Процедура выполнена");
+
+    closeModal();
+    save();
+    render();
+}
+
+/* =========================================================
+   DECISION
+   ========================================================= */
+
+function decisionModal(){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    const enoughHistory=p.asked.length>=Math.min(2,p.history.length);
+    const enoughExam=p.examined.length>=Math.min(2,p.exam.length);
+
+    openModal(
+        "🧠 Клиническое решение",
+        `
+
+        <div class="result">
+            <strong>Анамнез</strong>
+            <span>${p.asked.length}/${p.history.length} пунктов</span>
+        </div>
+
+        <div class="result">
+            <strong>Осмотр</strong>
+            <span>${p.examined.length}/${p.exam.length} признаков</span>
+        </div>
+
+        <div class="result">
+            <strong>Исследования</strong>
+            <span>${Object.keys(p.results).length}</span>
+        </div>
+
+        <br>
+
+        ${
+            !enoughHistory||!enoughExam
+            ?
+            `
+            <div class="result">
+                <strong>⚠️ Данных мало</strong>
+                <span>
+                    Можно принять решение, но неопределённость
+                    увеличит риск ошибки.
+                </span>
+            </div>
+            `
+            :""
+        }
+
+        <h4 style="margin:15px 0 9px">
+            Куда направить пациента?
+        </h4>
+
+        <div class="choice-grid">
+
+            ${DB.departments.map(d=>`
+
+                <button class="choice"
+                    onclick="chooseDestination('${d[0]}')">
+                    ${d[2]} ${d[1]}
+                </button>
+
+            `).join("")}
+
+        </div>
+
+        `
+    );
+}
+
+function chooseDestination(destination){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    p.destination=destination;
+
+    addLog(
+        p,
+        "Выбрано направление: "+departmentName(destination),
+        "info"
+    );
+
+    closeModal();
+
+    finalDecision();
+
+}
+
+function finalDecision(){
+
+    const p=currentPatient();
+
+    if(!p||p.suspected===null||p.destination===null){
+
+        toast("Нужно выбрать гипотезу и направление","bad");
+        return;
+    }
+
+    const selected=p.alternatives[p.suspected];
+
+    let correctDiagnosis=selected===p.diagnosis;
+
+    let correctDestination=p.destination===p.department;
+
+    let dataQuality=
+        p.asked.length>=2 &&
+        p.examined.length>=2;
+
+    let emergencyReady=true;
+
+    if(p.priority===1){
+
+        if(p.id==="stroke"){
+            emergencyReady=
+                !!p.results.ct;
+        }
+
+        if(p.id==="mi"){
+            emergencyReady=
+                !!p.results.ecg;
+        }
+
+        if(p.id==="allergy"){
+            emergencyReady=
+                p.examined.length>=3;
+        }
+
+        if(p.id==="poison"){
+            emergencyReady=
+                !!p.results.tox;
+        }
+    }
+
+    let score=0;
+
+    if(correctDiagnosis) score+=50;
+    if(correctDestination) score+=25;
+    if(dataQuality) score+=15;
+    if(emergencyReady) score+=10;
+
+    const good=score>=80;
+
+    if(good){
+
+        state.shift.successful++;
+        state.stats.diagnoses++;
+
+        addXP(45);
+        state.money+=75;
+
+        addLog(
+            p,
+            "Случай завершён успешно. Итоговая оценка: "+score+"/100.",
+            "good"
+        );
+
+        p.status="done";
+
+        toast("Случай завершён успешно! +XP");
+
+        showCaseResult(
+            p,
+            score,
+            correctDiagnosis,
+            correctDestination,
+            emergencyReady
+        );
+
+    }else{
+
+        p.errors++;
+
+        state.shift.mistakes++;
+
+        state.reputation=Math.max(
+            0,
+            state.reputation-(correctDiagnosis?2:5)
+        );
+
+        p.status="needs_review";
+
+        addLog(
+            p,
+            "Случай завершён с ошибками. Итоговая оценка: "+score+"/100.",
+            "bad"
+        );
+
+        showCaseResult(
+            p,
+            score,
+            correctDiagnosis,
+            correctDestination,
+            emergencyReady
+        );
+    }
+
+    save();
+}
+
+function showCaseResult(
+    p,
+    score,
+    correctDiagnosis,
+    correctDestination,
+    emergencyReady
+){
+
+    openModal(
+        "📋 Итог случая",
+        `
+
+        <div class="result">
+            <strong>Результат</strong>
+            <span>${score}/100</span>
+        </div>
+
+        <div class="result">
+            <strong>Рабочая гипотеза</strong>
+            <span>
+                ${correctDiagnosis?"✓ Верно":"✕ Ошибка"}
+            </span>
+        </div>
+
+        <div class="result">
+            <strong>Направление</strong>
+            <span>
+                ${correctDestination?"✓ Подходит":"✕ Требует пересмотра"}
+            </span>
+        </div>
+
+        <div class="result">
+            <strong>Экстренная готовность</strong>
+            <span>
+                ${emergencyReady?"✓ Достаточно":"✕ Не выполнены необходимые действия"}
+            </span>
+        </div>
+
+        <br>
+
+        <div class="result">
+            <strong>Разбор случая</strong>
+            <span>
+                Игровой диагноз: ${esc(p.diagnosis)}.
+                В реальной медицине решение принимается
+                квалифицированными специалистами по клиническим протоколам.
+            </span>
+        </div>
+
+        <br>
+
+        <button class="primary"
+            onclick="closeModal();go('queue')">
+            Вернуться к пациентам
+        </button>
+
+        `
+    );
+}
+
+/* =========================================================
+   PROCEDURE BUTTONS FOR MISSING TESTS
+   ========================================================= */
+
+function ensureTestForCase(p,key){
+
+    if(p.results[key])return true;
+
+    return false;
+}
+
+/* Add CT as special diagnostic action */
+function doCT(){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    if(p.results.ct){
+        toast("КТ уже выполнена");
+        return;
+    }
+
+    openModal(
+        "🧠 КТ головного мозга",
+        `
+        <p class="muted">
+            В игре исследование доступно как диагностический этап.
+        </p>
+
+        <br>
+
+        <button class="action blue"
+            style="width:100%"
+            onclick="finishCT()">
+            Выполнить КТ
+        </button>
+        `
+    );
+}
+
+function finishCT(){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    p.results.ct=p.tests.ct||
+        "Без признаков внутричерепного кровоизлияния.";
+
+    addLog(p,"Получен результат КТ.","good");
+
+    advanceShift(12);
+
+    addXP(15);
+
+    closeModal();
+    render();
+}
+
+/* =========================================================
+   ADDITIONAL DIAGNOSTIC PANEL
+   ========================================================= */
+
+function diagnosticModal(){
+
+    const p=currentPatient();
+
+    openModal(
+        "🧪 Диагностические исследования",
+        `
+
+        <div class="choice-grid">
+
+            <button class="choice"
+                onclick="closeModal();startProcedure('blood')">
+                🩸 Общий анализ крови
+            </button>
+
+            <button class="choice"
+                onclick="closeModal();startProcedure('ecg')">
+                🫀 ЭКГ
+            </button>
+
+            <button class="choice"
+                onclick="closeModal();startProcedure('xray')">
+                🩻 Рентген
+            </button>
+
+            <button class="choice"
+                onclick="closeModal();startProcedure('ultrasound')">
+                📡 УЗИ
+            </button>
+
+            <button class="choice"
+                onclick="doCT()">
+                🧠 КТ
+            </button>
+
+        </div>
+
+        `
+    );
+}
+
+/* =========================================================
+   LEAVE PATIENT
+   ========================================================= */
+
+function leavePatient(){
+
+    const p=currentPatient();
+
+    if(p){
+
+        if(p.priority===1 && p.status==="active"){
+
+            p.errors++;
+            state.shift.mistakes++;
+
+            state.reputation=Math.max(
+                0,
+                state.reputation-3
+            );
+
+            addLog(
+                p,
+                "Пациент оставлен без завершения работы.",
+                "bad"
+            );
+        }
+
+        p.status="waiting";
+    }
+
+    state.current=null;
+    state.screen="queue";
+
+    save();
+    render();
+}
+
+/* =========================================================
+   HOSPITAL
+   ========================================================= */
+
+function renderHospital(){
+
+    return `
+
+    <div class="card">
+
+        <div class="card-title">
+            <div>
+                <h3>🏥 Структура больницы</h3>
+                <small class="muted">
+                    Пациент проходит путь от приёма до отделения.
+                </small>
+            </div>
+        </div>
+
+        <div class="grid grid-3">
+
+            ${
+                DB.departments.map(d=>`
+
+                    <div class="card">
+
+                        <div style="font-size:30px">
+                            ${d[2]}
+                        </div>
+
+                        <h3 style="margin-top:8px">
+                            ${d[1]}
+                        </h3>
+
+                        <p class="muted" style="margin-top:5px">
+                            ${departmentDescription(d[0])}
+                        </p>
+
+                    </div>
+
+                `).join("")
+            }
+
+        </div>
+
+    </div>
+    `;
+}
+
+function departmentDescription(id){
+
+    const map={
+        admissions:"Первичный приём, сортировка и распределение.",
+        therapy:"Пациенты терапевтического профиля.",
+        neurology:"Неврологические случаи.",
+        surgery:"Раны, травмы и острые хирургические состояния.",
+        burns:"Пациенты с ожоговыми повреждениями.",
+        icu:"Пациенты в тяжёлом состоянии.",
+        lab:"Исследование биоматериала.",
+        diagnostics:"Инструментальная диагностика.",
+        pediatrics:"Детские пациенты.",
+        infectious:"Инфекционные заболевания.",
+        psychiatry:"Психиатрические и поведенческие состояния."
+    };
+
+    return map[id]||"Отделение больницы.";
+}
+
+/* =========================================================
+   CAREER
+   ========================================================= */
+
+function renderCareer(){
+
+    const prof=DB.professions[state.profession];
+
+    return `
+
+    <div class="grid grid-2">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h3>👤 Персонаж</h3>
+            </div>
+
+            <div style="font-size:30px">
+                ${prof.icon}
+            </div>
+
+            <br>
+
+            <h2>${esc(state.name)}</h2>
+
+            <p class="muted">
+                ${prof.name}
+            </p>
+
+            <br>
+
+            <div class="result">
+                <strong>Зарплата за смену</strong>
+                <span>Базовая: ${prof.salary} ₽</span>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-title">
+                <h3>📈 Навыки</h3>
+            </div>
+
+            <div class="result">
+                <strong>Уровень</strong>
+                <span>${state.level}</span>
+            </div>
+
+            <div class="result">
+                <strong>Опыт</strong>
+                <span>${state.xp}/${xpNeed()} XP</span>
+            </div>
+
+            <div class="result">
+                <strong>Репутация</strong>
+                <span>${state.reputation}/100</span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>🧑‍⚕️ Профессия</h3>
+        </div>
+
+        <div class="grid grid-2">
+
+            ${
+                Object.entries(DB.professions).map(([id,p])=>`
+
+                    <button
+                        class="card"
+                        style="
+                            text-align:left;
+                            cursor:pointer;
+                            color:white;
+                            border:
+                            1px solid
+                            ${state.profession===id
+                                ?"var(--cyan)"
+                                :"var(--line)"};
+                        "
+                        onclick="changeProfession('${id}')"
+                    >
+
+                        <div style="font-size:27px">
+                            ${p.icon}
+                        </div>
+
+                        <h3 style="margin-top:7px">
+                            ${p.name}
+                        </h3>
+
+                        <p class="muted" style="margin-top:5px">
+                            ${p.desc}
+                        </p>
+
+                    </button>
+
+                `).join("")
+            }
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>🏆 Достижения статистики</h3>
+        </div>
+
+        <div class="tags">
+
+            <span class="tag">
+                🩺 Осмотров ${state.stats.examinations}
+            </span>
+
+            <span class="tag">
+                🩸 Заборов ${state.stats.blood}
+            </span>
+
+            <span class="tag">
+                🫀 ЭКГ ${state.stats.ecg}
+            </span>
+
+            <span class="tag">
+                🩻 Рентгенов ${state.stats.xray}
+            </span>
+
+            <span class="tag">
+                🔥 Ожогов ${state.stats.bandages}
+            </span>
+
+        </div>
+
+    </div>
+
+    `;
+}
+
+function changeProfession(id){
+
+    if(state.shift.active){
+        toast("Профессию можно менять между сменами","bad");
+        return;
+    }
+
+    state.profession=id;
+
+    save();
+    render();
+
+    toast("Профессия изменена");
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function renderSettings(){
+
+    return `
+
+    <div class="grid grid-2">
+
+        <div class="card">
+
+            <div class="card-title">
+                <h3>🎵 Музыка</h3>
+            </div>
+
+            <p class="muted">
+                Файл должен называться <b>med.mp3</b>
+                и находиться рядом с index.html.
+            </p>
+
+            <br>
+
+            <button class="action blue"
+                onclick="toggleMusic()">
+
+                ${state.music
+                    ?"⏸ Выключить музыку"
+                    :"▶ Включить музыку"}
+
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-title">
+                <h3>💾 Сохранение</h3>
+            </div>
+
+            <p class="muted">
+                Прогресс сохраняется автоматически
+                в браузере через localStorage.
+            </p>
+
+            <br>
+
+            <button class="action red"
+                onclick="resetGame()">
+                🗑 Сбросить прогресс
+            </button>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <div class="card-title">
+            <h3>ℹ️ MED SHIFT REMAKE 1.0</h3>
+        </div>
+
+        <p class="muted" style="line-height:1.7">
+            Однофайловый прототип больничного симулятора.
+            Игровые медицинские ситуации являются вымышленной
+            механикой и не заменяют медицинские протоколы,
+            обучение или работу медицинского специалиста.
+        </p>
+
+    </div>
+
+    `;
+}
+
+/* =========================================================
+   MUSIC
+   ========================================================= */
+
+async function toggleMusic(){
+
+    const music=$("music");
+
+    try{
+
+        if(music.paused){
+
+            await music.play();
+
+            state.music=true;
+            toast("Музыка включена");
+
+        }else{
+
+            music.pause();
+
+            state.music=false;
+            toast("Музыка выключена");
+
+        }
+
+    }catch(e){
+
+        toast("Браузер заблокировал автозапуск. Нажми ещё раз.");
+
+    }
+
+    save();
+    render();
+}
+
+/* =========================================================
+   KEYBOARD
+   ========================================================= */
+
+document.addEventListener("keydown",e=>{
+
+    if(e.key==="Escape"){
+        closeModal();
+    }
+
+});
+
+/* =========================================================
+   FIX: TEST NAME TYPO SAFE OVERRIDE
+   ========================================================= */
+
+function testName(k){
+
+    const names={
+        blood:"Общий анализ крови",
+        glucose:"Глюкоза",
+        ecg:"ЭКГ",
+        xray:"Рентген",
+        ultrasound:"УЗИ",
+        tox:"Токсикологическое исследование",
+        ct:"КТ головного мозга",
+        swab:"Мазок"
+    };
+
+    return names[k]||k;
+}
+
+/* =========================================================
+   QUICK ACTIONS
+   ========================================================= */
+
+/*
+   These actions deliberately don't instantly give a result.
+   They represent decisions that must be made from the patient data.
+*/
+
+function oxygenCheck(){
+
+    const p=currentPatient();
+
+    if(!p)return;
+
+    if(p.vitals.spo2<94){
+
+        addLog(
+            p,
+            "Обнаружена сниженная сатурация — требуется внимание к дыханию.",
+            "info"
+        );
+
+        addXP(5);
+
+    }else{
+
+        addLog(
+            p,
+            "SpO₂ находится без выраженного снижения.",
+            "info"
+        );
+    }
+
+    advanceShift(1);
+    render();
+}
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
+load();
+
+if(state.shift &&
+   state.shift.active &&
+   state.shift.minute>=state.shift.max){
+
+    state.shift.active=false;
+}
+
+render();
+
+/* =========================================================
+   MOBILE FRIENDLY CLICK MUSIC
+   ========================================================= */
+
+document.addEventListener("click",function(){
+
+    if(
+        state.settings.sound &&
+        !state.music &&
+        $("music") &&
+        localStorage.getItem("med_music_attempt")
+    ){
+        // no automatic playback — browser policy friendly
+    }
+
+},{once:true});
+
+/* =========================================================
+   END
+   ========================================================= */
+</script>
+
+</body>
+</html>
